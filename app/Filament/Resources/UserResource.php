@@ -19,7 +19,7 @@ class UserResource extends Resource
     protected static ?string $model = User::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static ?string $navigationGroup ='Quản lý';
     public static function form(Form $form): Form
     {
         return $form
@@ -28,6 +28,7 @@ class UserResource extends Resource
                 TextInput::make('email')->email()->required(),
                 TextInput::make('password')->password()->required(),
                 TextInput::make('SDT')->required(),
+                TextInput::make('is_admin')->required(),
                 FileUpload::make('image')
                     ->image()
                     ->directory('customers')
@@ -41,14 +42,15 @@ class UserResource extends Resource
             ->columns([
                 TextColumn::make('name')->label('Tên'),
                 TextColumn::make('email')->label('Email'),
-                TextColumn::make('SDT')->label('Số điện thoại'), // Đảm bảo tên đúng với database
+                TextColumn::make('SDT')->label('Số điện thoại'),
+                TextColumn::make('is_admin')->label('Quyền'),
                 TextColumn::make('created_at')
                     ->label('Ngày tạo')
                     ->dateTime(),
                 TextColumn::make('updated_at')
                     ->label('Cập nhật lần cuối')
                     ->dateTime(),
-                ImageColumn::make('image')->label('Avatar')->size(50), // Sửa label cho đúng
+                ImageColumn::make('image')->label('Avatar')->size(50),
             ])
             ->filters([
                 //
@@ -74,9 +76,9 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
+            'index'  => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'edit'   => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }
