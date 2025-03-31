@@ -26,6 +26,3 @@ return new class extends Migration
         });
     }
 };
-$user = App\Models\User::find(3); // Tìm user theo id hoặc điều kiện khác
-$user->is_admin = 1; // Cập nhật thành admin
-$user->save();
