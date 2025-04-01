@@ -53,7 +53,7 @@ class RolePolicy
      */
     public function restore(User $user, Role $role): bool
     {
-        return false;
+        return $user->hasAnyRole(['super-admin']);
     }
 
     /**
@@ -61,6 +61,6 @@ class RolePolicy
      */
     public function forceDelete(User $user, Role $role): bool
     {
-        return false;
+        return $user->hasAnyRole(['super-admin']);
     }
 }

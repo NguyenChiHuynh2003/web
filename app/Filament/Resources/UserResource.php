@@ -75,7 +75,7 @@ class UserResource extends Resource
                 TextColumn::make('roles.name')->sortable(),
                 TextColumn::make('email_verified_at')->dateTime()->sortable(),
                 TextColumn::make('created_at')->dateTime()->sortable(),
-                TextColumn::make('updated_at')->dateTime()->sortable(),
+            
                 TextColumn::make('SDT')->searchable(),
                 // Hiển thị cột deleted_at nếu model sử dụng SoftDeletes
                 TextColumn::make('deleted_at')

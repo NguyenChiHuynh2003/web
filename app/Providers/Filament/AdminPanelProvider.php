@@ -28,18 +28,15 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors([
-                    'primary' => Color::Hex('#708090'), // Màu xám khói (Slate Gray) 
+                'primary' => Color::Hex('#708090'), // Màu xám khói (Slate Gray)
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                Pages\Dashboard::class, // Đăng ký Dashboard page
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
-            ->widgets([
-        
-             
-            ])
+            ->widgets([]) // Không còn đăng ký BlogPostsChart
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -52,7 +49,7 @@ class AdminPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([
-                Authenticate::class,
+                Authenticate::class, // Middleware cho việc xác thực người dùng
             ]);
     }
 }
