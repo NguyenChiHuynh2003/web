@@ -1,0 +1,139 @@
+body {
+    background-color: #1a202c;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  
+  .header {
+    background: white;
+    height: 60px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-img {
+    height: 40px;
+    margin-right: 10px;
+  }
+  
+  .app-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #555;
+    font-weight: bold;
+  }
+  
+  .nav a:hover {
+    color: #007bff;
+  }
+  
+  .user-options button {
+    background: #007bff;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .container {
+    background: #2d3748;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    margin: 100px auto 20px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    color: white;
+  }
+  
+  .purple { background: #805ad5; }
+  .purple:hover { background: #6b46c1; }
+  
+  .blue { background: #3182ce; }
+  .blue:hover { background: #2b6cb0; }
+  
+  .red { background: #e53e3e; }
+  .red:hover { background: #c53030; }
+  
+  .result-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .image-preview {
+    border: 2px solid #4a5568;
+    padding: 10px;
+    border-radius: 5px;
+    min-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  video, img {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 5px;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .chat-answer-box {
+    margin-top: 20px;
+    padding: 10px;
+    border: 2px solid #4a5568;
+    border-radius: 5px;
+    background-color: #2d3748;
+  }
+  .text-box {
+    padding: 10px;
+    border: 2px solid #4a5568;
+    border-radius: 5px;
+    background-color: #2d3748;
+  }
