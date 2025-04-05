@@ -28,13 +28,10 @@
   <div class="container">
     <h1>Nhận diện Tiền Xu</h1>
     <div class="button-group">
-      <label for="upload" class="button purple">📷 Chọn ảnh</label>
-      <input type="file" id="upload" accept="image/*" class="hidden" onchange="uploadImageBoth()">
-
-      <button id="open-webcam" class="button blue">📸 Mở Webcam</button>
-      <button id="capture" class="button red hidden">📷 Chụp</button>
+      <a href="{{ route('register') }}" class="button purple">📷 Chọn ảnh</a>
+      <a href="{{ route('register') }}" class="button blue">📸 Mở Webcam</a>
+    
     </div>
-
     <div class="result-container">
       <div class="image-preview">
         <video id="webcam" class="hidden" autoplay></video>

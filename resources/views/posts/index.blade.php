@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bài viết - Coins Master</title>
+  <title>Nhận diện Tiền Xu</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 </head>
@@ -14,30 +14,35 @@
       <span class="app-name">Coins Master</span>
     </div>
     <nav class="nav">
-      <a href="/" class="text-gray-700 hover:text-blue-500">🏠 Trang chủ</a>
+      <a href="http://127.0.0.1:8000/dashboard">🏠 Trang chủ</a>
       <a href="http://127.0.0.1:8000/posts">📜 Bài viết</a>
-      <a href="#" class="text-gray-700 hover:text-blue-500">📖 Giới thiệu</a>
+      <a href="#">📖 Giới thiệu</a>
     </nav>
-    < <div class="user-options">
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
+    <div class="user-options">
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+        @csrf
+      </form>
 
-        <button class="btn-logout" onclick="document.getElementById('logout-form').submit();">🔑 Đăng Xuất</button>
-
+      <button class="btn-logout" onclick="document.getElementById('logout-form').submit();">🔑 Đăng Xuất</button>
     </div>
   </header>
 
-  <div class="container">
-    <h1>Danh sách bài viết</h1>
-    <div class="post-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      @foreach ($posts as $post)
-        <div class="post-item bg-white shadow-md rounded p-4 hover:bg-gray-100 transition">
-          <h2 class="text-xl font-semibold text-gray-900">{{ $post->title }}</h2>
-          <p class="text-gray-600 mt-2">{{ Str::limit($post->content, 100) }}</p>
-          <a href="{{ route('posts.show', $post->id) }}" class="text-blue-500 mt-2 inline-block">Xem chi tiết →</a>
-        </div>
-      @endforeach
+  <div class="container mx-auto px-4 py-6">
+    <h1 style="color: white">Danh sách bài viết</h1>
+
+    <!-- Form tìm kiếm -->
+    <form method="GET" action="{{ url('posts') }}" class="mb-6">
+        <input style="color: black" type="text" name="search" placeholder="Tìm bài viết..." class="px-4 py-2 rounded-md" style="width: 100%; max-width: 400px;">
+    </form>
+
+    <div class="post-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        @foreach ($posts as $post)
+            <div class="post-item bg-gray-500 shadow-md rounded-lg">
+                <h2 style="color: white">{{ $post->title }}</h2>
+                <p style="color: white">{!! Str::limit($post->content, 100) !!}</p>
+                <a href="{{ route('posts.show', $post->id) }}" style="color: white">Xem chi tiết →</a>
+            </div>
+        @endforeach
     </div>
   </div>
 

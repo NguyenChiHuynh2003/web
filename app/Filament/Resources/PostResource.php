@@ -23,16 +23,38 @@ class PostResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
-            ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->label('Tiêu đề')
-                    ->required()
-                    ->maxLength(255),
+    ->schema([
+        Forms\Components\TextInput::make('title')
+            ->label('Tiêu đề')
+            ->required()
+            ->maxLength(255),
 
-                Forms\Components\Textarea::make('content')
-                    ->label('Nội dung')
-                    ->required(),
-            ]);
+        Forms\Components\TextInput::make('slug')
+            ->label('Đường dẫn (slug)')
+            ->helperText('Tự động tạo nếu để trống'),
+
+        Forms\Components\RichEditor::make('content')
+            ->label('Nội dung')
+            ->required()
+            ->toolbarButtons([
+                'bold',
+                'italic',
+                'underline',
+                'strike',
+                'link',
+                'bulletList',
+                'orderedList',
+                'blockquote',
+                'codeBlock',
+                'h2',
+                'h3',
+                'hr',
+            ])
+            ->columnSpanFull(),
+
+        Forms\Components\DatePicker::make('published_at')
+            ->label('Ngày đăng'),
+    ]);
     }
 
     public static function table(Table $table): Table
