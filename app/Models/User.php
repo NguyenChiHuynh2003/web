@@ -52,9 +52,11 @@ class User extends Authenticatable implements FilamentUser
 
     /**
      * Determine if the user can access the Filament panel.
+     *
+     * Ở đây, tôi sẽ cho phép tất cả người dùng đã đăng ký vào được admin panel
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        return str_ends_with($this->email, 'admin@gmail.com');
+        return true;  // Bất kỳ tài khoản nào trong hệ thống đều có quyền truy cập
     }
 }
