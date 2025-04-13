@@ -28,4 +28,12 @@ use App\Http\Controllers\PostController;
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
 
+use App\Http\Controllers\AccountController;
+Route::get('/account', [AccountController::class, 'edit'])->middleware('auth');
+Route::post('/account', [AccountController::class, 'update'])->name('account.update')->middleware('auth');
+
+Route::get('/about', function () {
+    return view('about');
+});
+
 require __DIR__.'/auth.php';

@@ -14,11 +14,10 @@
       <span class="app-name">Coins Master</span>
     </div>
     <nav class="nav">
-      <a href="http://127.0.0.1:8000/dashboard">🏠 Trang chủ</a>
-      <a href="http://127.0.0.1:8000/posts">📜 Bài viết</a>
-      <a href="#">📖 Giới thiệu</a>
+      <a href="http://192.168.1.100:8000/dashboard">🏠 Trang chủ</a>
+      <a href="http://192.168.1.100:8000/posts">📜 Bài viết</a>
+      <a href="http://192.168.1.100:8000/about">📖 Giới thiệu</a>
     </nav>
- 
     <div class="user-options">
         <a href="{{ route('login') }}" class="btn-login">🔑 Đăng Nhập</a>
         <a href="{{ route('register') }}" class="btn-register">📝 Đăng Ký</a>
@@ -30,7 +29,7 @@
     <div class="button-group">
       <a href="{{ route('register') }}" class="button purple">📷 Chọn ảnh</a>
       <a href="{{ route('register') }}" class="button blue">📸 Mở Webcam</a>
-    
+
     </div>
     <div class="result-container">
       <div class="image-preview">
@@ -46,6 +45,13 @@
       <p id="chat-answer" class="text-xl mt-4">Thông tin chi tiết...</p>
     </div>
   </div>
+  <div class ="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Coins Master. Đây là footer</p>
+      <p>Liên hệ: nh3571412@gmail.comcom</p>
+    </div>
+</div>
+
 
   <script src="{{ asset('js/script.js') }}"></script>
 </body>

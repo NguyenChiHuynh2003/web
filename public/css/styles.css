@@ -1,148 +1,240 @@
-body {
-    background-color: #1a202c;
-    color: white;
-    font-family: Arial, sans-serif;
-  }
-  
+/* Layout nền & cấu trúc trang */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #1a202c;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.header {
+  background: white;
+  height: 60px;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo-img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.app-name {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #555;
+  font-weight: bold;
+}
+
+.nav a:hover {
+  color: #007bff;
+}
+
+.user-options button {
+  background: #fe030f;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-login,
+.btn-register {
+  color: #1a202c;
+}
+
+/* Nội dung chính */
+.container {
+  flex: 1;
+  background: #2d3748;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 80%;
+  margin: 100px auto 20px; /* 100px để tránh bị header che */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  padding-bottom: 12vh; /* Đệm tránh footer che */
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.button {
+  width: 50%;
+  max-width: 200px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  color: white;
+}
+
+.purple {
+  background: #805ad5;
+}
+.purple:hover {
+  background: #6b46c1;
+}
+
+.blue {
+  background: #3182ce;
+}
+.blue:hover {
+  background: #2b6cb0;
+}
+
+.red {
+  background: #e53e3e;
+}
+.red:hover {
+  background: #c53030;
+}
+
+.result-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.image-preview {
+  border: 2px solid #4a5568;
+  padding: 10px;
+  border-radius: 5px;
+  min-height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+video,
+img {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
+.chat-answer-box {
+  margin-top: 20px;
+  padding: 10px;
+  border: 2px solid #4a5568;
+  border-radius: 5px;
+  background-color: #2d3748;
+}
+
+.text-box {
+  padding: 10px;
+  border: 2px solid #4a5568;
+  border-radius: 5px;
+  background-color: #2d3748;
+}
+
+/* Footer luôn ở đáy */
+.footer {
+  height: 15vh;
+  background-color: #1a202c;
+  color: #e2e8f0;
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid #4a5568;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.footer-content p {
+  margin: 5px 0;
+}
+
+@media (max-width: 768px) {
   .header {
-    background: white;
-    height: 60px;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex;
+    height: auto;
+    flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-  }
-  
-  .logo {
-    display: flex;
-    align-items: center;
-  }
-  
-  .logo-img {
-    height: 40px;
-    margin-right: 10px;
-  }
-  
-  .app-name {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-  }
-  
-  .nav a {
-    
-    margin: 0 15px;
-    text-decoration: none;
-    color: #555;
-    font-weight: bold;
-  }
-  
-  .nav a:hover {
-    color: #007bff;
-  }
-  
-  .user-options button {
-    background: #fe030f;
-    color: white;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .container {
-    background: #2d3748;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    width: 80%;
-    margin: 100px auto 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-  }
-  
-  
-  h1 {
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  .button-group {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
-  
-  .button {
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-    border: none;
-    color: white;
-  }
-  
-  .purple { background: #805ad5; }
-  .purple:hover { background: #6b46c1; }
-  
-  .blue { background: #3182ce; }
-  .blue:hover { background: #2b6cb0; }
-  
-  .red { background: #e53e3e; }
-  .red:hover { background: #c53030; }
-  
-  .result-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 20px;
-  }
-  
-  .image-preview {
-    border: 2px solid #4a5568;
-    padding: 10px;
-    border-radius: 5px;
-    min-height: 150px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 8px 10px;
     position: relative;
   }
-  
-  video, img {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 5px;
+
+  .logo {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 8px;
   }
-  
-  .hidden {
-    display: none;
+
+  .logo-img {
+    height: 30px;
+    margin-right: 0;
+    margin-bottom: 4px;
   }
-  
-  .chat-answer-box {
-    margin-top: 20px;
-    padding: 10px;
-    border: 2px solid #4a5568;
-    border-radius: 5px;
-    background-color: #2d3748;
+
+  .app-name {
+    font-size: 16px;
   }
-  .text-box {
-    padding: 10px;
-    border: 2px solid #4a5568;
-    border-radius: 5px;
-    background-color: #2d3748;
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
   }
-  .btn-login{
-    color:#1a202c;
+
+  .nav a {
+    margin: 0;
+    font-size: 14px;
   }
-  .btn-register
-  {
-    color:#1a202c;
+
+  .user-options {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
   }
+
+  .btn-login,
+  .btn-register,
+  .btn-logout {
+    font-size: 13px;
+    padding: 6px 12px;
+  }
+}
