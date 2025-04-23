@@ -1,107 +1,156 @@
-/* Layout nền & cấu trúc trang */
+/* Reset & font */
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  background-color: #1a202c;
-  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #ffffff;
+  color: #111;
   display: flex;
   flex-direction: column;
+  scroll-behavior: smooth;
 }
 
-/* Header */
 .header {
-  background: white;
-  height: 60px;
+  background: #ffffff;
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 10px 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-height: 60px;
   z-index: 1000;
 }
 
 .logo {
   display: flex;
   align-items: center;
+  gap: 10px;
+  flex: 1;
 }
 
 .logo-img {
   height: 40px;
-  margin-right: 10px;
+  border-radius: 50%;
+  animation: rotateLogo 6s linear infinite;
 }
 
 .app-name {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
-  color: #333;
+  color: #222;
+  transition: color 0.3s;
 }
 
-.nav a {
-  margin: 0 15px;
-  text-decoration: none;
-  color: #555;
-  font-weight: bold;
-}
-
-.nav a:hover {
+.app-name:hover {
   color: #007bff;
 }
 
-.user-options button {
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  flex: 2;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.3s;
+}
+
+.nav a:hover {
+  background: #f0f0f0;
+  color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
+}
+
+.user-options {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  justify-content: flex-end;
+}
+
+.btn-logout {
   background: #fe030f;
   color: white;
-  padding: 8px 15px;
+  padding: 8px 14px;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s, transform 0.2s;
 }
 
-.btn-login,
-.btn-register {
-  color: #1a202c;
+.btn-logout:hover {
+  background: #c6000b;
+  transform: translateY(-2px);
 }
 
-/* Nội dung chính */
+/* Khoảng cách giữa header và container */
+main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 .container {
   flex: 1;
-  background: #2d3748;
-  padding: 20px;
-  border-radius: 10px;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
   text-align: center;
-  width: 80%;
-  margin: 100px auto 20px; /* 100px để tránh bị header che */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-  padding-bottom: 12vh; /* Đệm tránh footer che */
+  width: 90%;
+  max-width: 950px;
+  margin: 100px auto 40px; /* Khoảng cách giữa header và container */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 28px;
   margin-bottom: 20px;
+  color: #333;
 }
 
 .button-group {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 15px;
   flex-wrap: wrap;
+  margin-bottom: 25px;
 }
 
 .button {
-  width: 50%;
-  max-width: 200px;
-  padding: 10px 20px;
-  border-radius: 5px;
+  width: 140px;
+  padding: 12px 16px;
+  border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
   border: none;
   color: white;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  transition: transform 0.2s, background 0.2s;
+}
+
+.button:hover {
+  transform: translateY(-2px) scale(1.02);
 }
 
 .purple {
@@ -109,13 +158,6 @@ h1 {
 }
 .purple:hover {
   background: #6b46c1;
-}
-
-.blue {
-  background: #3182ce;
-}
-.blue:hover {
-  background: #2b6cb0;
 }
 
 .red {
@@ -126,115 +168,121 @@ h1 {
 }
 
 .result-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
   margin-top: 20px;
 }
 
 .image-preview {
-  border: 2px solid #4a5568;
-  padding: 10px;
-  border-radius: 5px;
-  min-height: 150px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-video,
-img {
   width: 100%;
-  max-width: 100%;
-  border-radius: 5px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  background: #f9f9f9;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
+  transition: border 0.3s ease;
 }
 
-.hidden {
+.image-preview:hover {
+  border-color: black;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+img.hidden {
   display: none;
 }
 
 .chat-answer-box {
-  margin-top: 20px;
-  padding: 10px;
-  border: 2px solid #4a5568;
-  border-radius: 5px;
-  background-color: #2d3748;
+  padding: 15px;
+  background: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  animation: fadeIn 0.5s;
 }
 
-.text-box {
-  padding: 10px;
-  border: 2px solid #4a5568;
-  border-radius: 5px;
-  background-color: #2d3748;
-}
-
-/* Footer luôn ở đáy */
 .footer {
-  height: 15vh;
-  background-color: #1a202c;
-  color: #e2e8f0;
+  background-color: #f1f1f1;
+  color: #444;
   text-align: center;
   padding: 20px 0;
-  border-top: 1px solid #4a5568;
+  border-top: 1px solid #ccc;
   font-size: 14px;
-  flex-shrink: 0;
+  flex-shrink: 0; /* Chắc chắn footer không bị co lại */
+  width: 100%;
 }
 
-.footer-content p {
-  margin: 5px 0;
-}
-
+/* 👇 Responsive cho mobile */
 @media (max-width: 768px) {
   .header {
-    height: auto;
     flex-direction: column;
-    align-items: center;
-    padding: 8px 10px;
-    position: relative;
+    align-items: flex-start;
+    padding: 10px;
   }
 
-  .logo {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 8px;
+  /* Ẩn 'Bài viết' và 'Giới thiệu' */
+  .nav a:nth-child(2), /* 'Bài viết' */
+  .nav a:nth-child(3) { /* 'Giới thiệu' */
+    display: none;
   }
 
-  .logo-img {
-    height: 30px;
-    margin-right: 0;
-    margin-bottom: 4px;
+  .logo, .nav, .user-options {
+    width: 100%;
+    justify-content: center;
+    margin: 5px 0;
   }
 
-  .app-name {
-    font-size: 16px;
+  .container {
+    margin-top: 100px; /* Tăng khoảng cách với header khi lên mobile */
   }
 
-  .nav {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 6px;
+  .image-preview {
+    height: 220px;
   }
 
-  .nav a {
-    margin: 0;
-    font-size: 14px;
-  }
-
+  /* Sắp xếp lại nút logout và logo */
   .user-options {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
+    justify-content: center;
+    margin-top: 10px;
   }
+}
 
-  .btn-login,
-  .btn-register,
-  .btn-logout {
-    font-size: 13px;
-    padding: 6px 12px;
-  }
+/* Nút đăng nhập và đăng ký (áp dụng cùng style nút chính) */
+.button.blue {
+  background: #3182ce;
+  text-decoration: none;
+}
+.button.blue:hover {
+  background: #2b6cb0;
+}
+
+.button.green {
+  background: #38a169;
+  text-decoration:none;
+}
+.button.green:hover {
+  background: #2f855a;
+}
+
+input.hidden {
+  display: none !important;
+}
+
+#myVideo {
+  position: relative;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover; /* Giữ tỷ lệ đúng của video */
 }

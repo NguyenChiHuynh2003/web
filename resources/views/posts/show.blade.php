@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nhận diện Tiền Xu</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <title>Nhận diện tiền xu AI</title>
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
 </head>
 <body>
-<header class="header">
+<main>
+   <header class="header">
     <div class="logo">
       <img src="{{ asset('storage/logo.jpg') }}" alt="Logo" class="logo-img">
       <span class="app-name">Coins Master</span>
@@ -16,8 +16,8 @@
     <nav class="nav">
       <a href="http://192.168.1.100:8000/dashboard">🏠 Trang chủ</a>
       <a href="http://192.168.1.100:8000/posts">📜 Bài viết</a>
-      <a href="http://192.168.1.100:8000/about">📖 Giới thiệu</a>
-      <a href="http://192.168.1.100:8000/account" class="font-bold text-purple-700">👤 Tài khoản</a>
+      <a href="http://192.168.1.100:8000/about" class="font-bold text-purple-700">📖 Giới thiệu</a>
+      <a href="http://192.168.1.100:8000/account">👤 Tài khoản</a>
     </nav>
     <div class="user-options">
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -26,7 +26,6 @@
       <button class="btn-logout" onclick="document.getElementById('logout-form').submit();">🔑 Đăng Xuất</button>
     </div>
   </header>
-
   <main class="container mx-auto my-8 px-4">
     <h1 class="text-3xl font-semibold mb-6 text-center" style="color: rgb(78, 121, 240);">{{ $post->title }}</h1>
 

@@ -3,22 +3,100 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thông tin tài khoản</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <title>Nhận diện tiền xu AI</title>
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+  <style>
+    /* Tăng khoảng cách giữa header và container */
+    .container {
+      margin-top: 160px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin-top: 180px;
+      }
+    }
+
+    /* Giới hạn kích thước ảnh đại diện upload */
+    .avatar-upload-preview {
+        width: 180px;  /* Đảm bảo chiều rộng cố định */
+        height: 180px; /* Đảm bảo chiều cao cố định */
+        margin: 10px auto;
+        border-radius: 50%; /* Để hình ảnh có hình dạng tròn */
+        object-fit: cover; /* Đảm bảo ảnh không bị méo */
+}
+
+
+
+    /* Giới hạn chiều rộng form upload file */
+    .upload-input {
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    /* Cải thiện căn chỉnh cho form */
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    label {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      text-align: left;
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+
+    .btn-logout, .bg-purple-700 {
+      font-size: 1rem;
+    }
+
+    .footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .footer a {
+      color: inherit;
+      text-decoration: none;
+    }
+    h1{
+        display:none;
+    }
+
+    /* Thêm một chút hiệu ứng hover cho các nút */
+    .bg-purple-700:hover {
+      background-color: #5b4b8a;
+    }
+
+  </style>
 </head>
 <body>
-  <!-- Header -->
+<main>
   <header class="header">
     <div class="logo">
       <img src="{{ asset('storage/logo.jpg') }}" alt="Logo" class="logo-img">
       <span class="app-name">Coins Master</span>
     </div>
     <nav class="nav">
-      <a href="/dashboard">🏠 Trang chủ</a>
-      <a href="/posts">📜 Bài viết</a>
-      <a href="http://192.168.1.100:8000/about">📖 Giới thiệu</a>
-      <a href="/account" class="font-bold text-purple-700">👤 Tài khoản</a>
+      <a href="http://192.168.1.100:8000/dashboard">🏠 Trang chủ</a>
+      <a href="http://192.168.1.100:8000/posts">📜 Bài viết</a>
+      <a href="http://192.168.1.100:8000/about" class="font-bold text-purple-700">📖 Giới thiệu</a>
+      <a href="http://192.168.1.100:8000/account">👤 Tài khoản</a>
     </nav>
     <div class="user-options">
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -28,14 +106,15 @@
     </div>
   </header>
 
-  <!-- Nội dung chỉnh sửa tài khoản -->
-  <div class="container max-w-2xl mx-auto mt-10 bg-white p-6 rounded shadow">
-    <h1 class="text-2xl font-bold mb-6 text-center text-white-700">Cập nhật thông tin tài khoản</h1>
+  <div class="container max-w-2xl mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Cập nhật thông tin tài khoản</h1>
+
     @if ($user->image)
-        <div class="flex justify-center">
-          <img src="{{ asset('storage/' . $user->image) }}" alt="Avatar" class="mt-2 h-40 w-40 rounded-full object-cover">
-        </div>
-      @endif
+      <div class="flex justify-center">
+        <img src="{{ asset('storage/' . $user->image) }}" alt="Avatar" class="mt-2 rounded-full object-cover avatar-upload-preview">
+      </div>
+    @endif
+
     @if(session('success'))
       <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
         {{ session('success') }}
@@ -45,51 +124,47 @@
     <form action="{{ route('account.update') }}" method="POST" enctype="multipart/form-data" class="space-y-5">
       @csrf
 
-      <div>
-        <label class="block font-medium mb-1">Họ và tên</label>
-        <input type="text" name="name" value="{{ old('name', $user->name) }}" class="w-full border rounded px-3 py-2 text-black" required>
+      <div class="input-group">
+        <label for="name">Họ và tên</label>
+        <input type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required>
       </div>
 
-      <div>
-        <label class="block font-medium mb-1">Email</label>
-        <input type="email" name="email" value="{{ old('email', $user->email) }}" class="w-full border rounded px-3 py-2 text-black" required>
+      <div class="input-group">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" value="{{ old('email', $user->email) }}" required>
       </div>
 
-      <div>
-        <label class="block font-medium mb-1">Số điện thoại</label>
-        <input type="text" name="SDT" value="{{ old('SDT', $user->SDT) }}" class="w-full border rounded px-3 py-2 text-black">
+      <div class="input-group">
+        <label for="SDT">Số điện thoại</label>
+        <input type="text" name="SDT" id="SDT" value="{{ old('SDT', $user->SDT) }}">
       </div>
 
-      <div>
-        <label class="block font-medium mb-1">Mật khẩu mới</label>
-        <input type="password" name="password" class="w-full border rounded px-3 py-2 text-black" placeholder="Để trống nếu không thay đổi">
+      <div class="input-group">
+        <label for="password">Mật khẩu mới</label>
+        <input type="password" name="password" id="password" placeholder="Để trống nếu không thay đổi">
       </div>
 
-      <div>
-        <label class="block font-medium mb-1">Xác nhận mật khẩu</label>
-        <input type="password" name="password_confirmation" class="w-full border rounded px-3 py-2 text-black">
+      <div class="input-group">
+        <label for="password_confirmation">Xác nhận mật khẩu</label>
+        <input type="password" name="password_confirmation" id="password_confirmation">
       </div>
 
-      <!-- Ảnh đại diện nằm dưới các input và lớn hơn -->
-      <div class="flex justify-center mt-6">
-        <label class="block font-medium mb-1">Ảnh đại diện</label>
+      <div class="input-group text-center">
+        <label for="image">Ảnh đại diện</label>
+        <input type="file" name="image" id="image" class="upload-input">
       </div>
-      <div class="flex justify-center">
-        <input type="file" name="image" class="w-full max-w-xs border rounded px-3 py-2 text-black mb-4">
-      </div>
-      
-      <div class="text-center">
+
+      <div class="text-center mt-4">
         <button type="submit" class="bg-purple-700 hover:bg-purple-800 px-6 py-2 rounded text-white">💾 Lưu thay đổi</button>
       </div>
     </form>
   </div>
 
-  <!-- Footer -->
-  <div class="footer mt-10 text-center text-sm text-gray-500">
+  <div class="footer">
     <p>&copy; 2025 Coins Master</p>
     <p>Liên hệ: nh3571412@gmail.com</p>
   </div>
-
-  <script src="{{ asset('js/script.js') }}"></script>
+</main>
+<script src="{{ asset('js/script.js') }}"></script>
 </body>
 </html>

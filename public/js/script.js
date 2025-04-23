@@ -1,14 +1,16 @@
-const API_BASE_URL = "http://192.168.1.100:5000";
+const API_BASE_URL = "http://127.0.0.1:5000";
 
+// Hàm upload ảnh và nhận kết quả từ cả API truyền thống và AI
 async function uploadImageBoth() {
   const fileInput = document.getElementById('upload');
   if (!fileInput.files.length) {
+    document.getElementById("info").innerText = "Vui lòng chọn một ảnh!";
     return;
   }
 
   const file = fileInput.files[0];
 
-  // Hiển thị ảnh xem trước
+  // Xem trước ảnh
   const reader = new FileReader();
   reader.onload = function(e) {
     const imgElement = document.getElementById('coin-image');
@@ -17,29 +19,27 @@ async function uploadImageBoth() {
   };
   reader.readAsDataURL(file);
 
-  // Chuẩn bị dữ liệu cho API nhận diện truyền thống
   const formDataTraditional = new FormData();
   formDataTraditional.append("image", file);
 
+  let resultText = "";
+
   try {
-    // Gọi API nhận diện truyền thống
+    // Gọi API truyền thống
     const responseTraditional = await fetch(`${API_BASE_URL}/recognize`, {
       method: "POST",
       body: formDataTraditional
     });
     const dataTraditional = await responseTraditional.json();
 
-    let resultText = "";
-    const threshold = 90; // ngưỡng độ chính xác
-
-    // Kiểm tra dữ liệu truyền thống và ngưỡng độ chính xác
+    const threshold = 90;
     if (
       dataTraditional.error ||
       !dataTraditional.coin_info ||
       isNaN(dataTraditional.confidence) ||
       dataTraditional.confidence < threshold
     ) {
-      // Chuẩn bị dữ liệu cho API OpenAI
+      // Nếu độ chính xác thấp → gọi AI
       const formDataAI = new FormData();
       formDataAI.append("file", file);
 
@@ -48,33 +48,28 @@ async function uploadImageBoth() {
         body: formDataAI
       });
       const dataAI = await responseAI.json();
-      resultText = (dataAI.error ? dataAI.error : dataAI.result);
+      resultText = dataAI.error ? dataAI.error : dataAI.result;
     } else {
-      const traditionalCoin = `${dataTraditional.coin_info.TENXU} ${dataTraditional.coin_info.TENQG}`;
-      const confidenceRounded = dataTraditional.confidence.toFixed(2);
-      resultText = `${traditionalCoin} (độ chính xác ${confidenceRounded}%)`;
+      const coin = `${dataTraditional.coin_info.TENXU} ${dataTraditional.coin_info.TENQG}`;
+      resultText = `${coin} (độ chính xác ${dataTraditional.confidence.toFixed(2)}%)`;
     }
 
     document.getElementById("info").innerText = resultText;
 
-    // Tạo câu hỏi tự động từ kết quả nhận diện
-    const question = `Thông tin của ${resultText}`;
-
-    // Gửi câu hỏi đến chatbot
+    // Luôn luôn gửi thông tin tới chatbot LLM
+    const question = `Hãy cung cấp thông tin chi tiết về đồng xu: ${resultText}`;
     askChatbot(question);
 
   } catch (error) {
     document.getElementById("info").innerText = "Lỗi kết nối đến API!";
+    console.error("Error during API request:", error);
+    askChatbot("Tôi gặp lỗi khi nhận diện đồng xu, bạn có thể giúp tôi không?");
   }
 }
 
+// Hàm gọi chatbot để nhận thông tin chi tiết
 async function askChatbot(question) {
   const chatAnswerElement = document.getElementById("chat-answer");
-
-  if (!question) {
-    alert("Vui lòng tải ảnh để nhận diện tiền xu trước!");
-    return;
-  }
 
   try {
     const response = await fetch(`${API_BASE_URL}/ask`, {
@@ -82,8 +77,8 @@ async function askChatbot(question) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ question })
     });
-    const data = await response.json();
 
+    const data = await response.json();
     const answer = data.answer || "Chatbot không trả lời được câu hỏi.";
     chatAnswerElement.innerText = answer;
 
@@ -93,74 +88,11 @@ async function askChatbot(question) {
   }
 }
 
-let webcamStream = null;
-
-// Mở webcam
-document.getElementById("open-webcam").addEventListener("click", async function () {
-  const videoElement = document.getElementById("webcam");
-  const captureButton = document.getElementById("capture");
-  const imgElement = document.getElementById("coin-image");
-
-  try {
-    webcamStream = await navigator.mediaDevices.getUserMedia({ video: true });
-    videoElement.srcObject = webcamStream;
-    videoElement.classList.remove("hidden");
-    imgElement.classList.add("hidden");
-    captureButton.classList.remove("hidden");
-  } catch (error) {
-    alert("Không thể mở webcam!");
-  }
-});
-
-// Chụp ảnh từ webcam
-document.getElementById("capture").addEventListener("click", function () {
-  const videoElement = document.getElementById("webcam");
-  const imgElement = document.getElementById("coin-image");
-  const canvas = document.createElement("canvas");
-  canvas.width = videoElement.videoWidth;
-  canvas.height = videoElement.videoHeight;
-  const ctx = canvas.getContext("2d");
-
-  ctx.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-  const imageData = canvas.toDataURL("image/png");
-
-  imgElement.src = imageData;
-  imgElement.classList.remove("hidden");
-  videoElement.classList.add("hidden");
-
-  stopWebcam(); // Tắt webcam sau khi chụp
-  sendCapturedImage(imageData);
-});
-
-// Tắt webcam sau khi chụp
-function stopWebcam() {
-  if (webcamStream) {
-    webcamStream.getTracks().forEach(track => track.stop());
-  }
-  document.getElementById("capture").classList.add("hidden");
-}
-
-// Gửi ảnh chụp đến API nhận diện
-async function sendCapturedImage(base64Image) {
-  try {
-    const response = await fetch(`${API_BASE_URL}/recognize`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ image: base64Image })
-    });
-    const data = await response.json();
-
-    let resultText = data.result || "Không nhận diện được.";
-    document.getElementById("info").innerText = resultText;
-
-    if (resultText === "Không nhận diện được.") {
-      document.getElementById("chat-answer").innerText = "Không có thông tin về đồng xu này.";
-    } else {
-      askChatbot(`Tên, năm sản xuất, chất liệu của ${resultText}`);
-    }
-
-  } catch (error) {
-    document.getElementById("info").innerText = "Lỗi kết nối đến API!";
-    document.getElementById("chat-answer").innerText = "Không thể lấy thông tin từ chatbot.";
-  }
+// Hàm xóa kết quả và reset giao diện
+function clearResults() {
+  const img = document.getElementById("coin-image");
+  img.src = "";
+  img.classList.add("hidden");
+  document.getElementById("info").innerText = "Kết quả sẽ hiển thị ở đây";
+  document.getElementById("chat-answer").innerText = "Thông tin chi tiết sẽ hiển thị tại đây...";
 }
