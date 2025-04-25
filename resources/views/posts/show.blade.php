@@ -5,19 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Nhận diện tiền xu AI</title>
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <main>
    <header class="header">
-    <div class="logo">
-      <img src="{{ asset('storage/logo.jpg') }}" alt="Logo" class="logo-img">
-      <span class="app-name">Coins Master</span>
+     <div class="logo" onmouseenter="playLogoSound()" onmouseleave="stopLogoSound()">
+      <!-- Hiển thị logo từ database -->
+        <img src="{{ asset('storage/' . $pageConfig->logo_path) }}" alt="Logo" class="logo-img">
+        <span class="app-name">{{ $pageConfig->site_name ?? 'Coin Master' }}</span> <!-- Hiển thị tên trang web -->
     </div>
     <nav class="nav">
-      <a href="http://192.168.1.100:8000/dashboard">🏠 Trang chủ</a>
-      <a href="http://192.168.1.100:8000/posts">📜 Bài viết</a>
-      <a href="http://192.168.1.100:8000/about" class="font-bold text-purple-700">📖 Giới thiệu</a>
-      <a href="http://192.168.1.100:8000/account">👤 Tài khoản</a>
+      <a href="http://127.0.0.1:8000/dashboard">🏠 Trang chủ</a>
+      <a href="http://127.0.0.1:8000/posts">📜 Bài viết</a>
+      <a href="http://127.0.0.1:8000/about" class="font-bold text-purple-700">📖 Giới thiệu</a>
+      <a href="http://127.0.0.1:8000/account">👤 Tài khoản</a>
     </nav>
     <div class="user-options">
       <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

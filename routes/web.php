@@ -1,39 +1,42 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\WebController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+// Route gốc
+Route::get('/', [WebController::class, 'index'])->name('home');
+
+// Route về trang giới thiệu
+Route::get('/about', [WebController::class, 'about'])->name('about');
+
+// Route liên quan đến bài viết
+Route::get('/posts', [WebController::class, 'posts'])->name('posts.index');
+Route::get('/posts/{post}', [WebController::class, 'show'])->name('posts.show');
+
+// Route dashboard
+Route::get('/dashboard', [WebController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+
+// Routes bảo vệ bởi middleware 'auth'
+Route::middleware('auth')->group(function () {
+    // Route về thông tin tài khoản
+    Route::get('/account', [WebController::class, 'account'])->name('account');
+    Route::post('/account', [AccountController::class, 'update'])->name('account.update');
+
+    // Route về hồ sơ người dùng
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-use Illuminate\Support\Facades\Auth;
-
+// Route đăng xuất
 Route::post('/logout', function () {
     Auth::logout();
     return redirect('/login'); // Chuyển hướng về trang đăng nhập
 })->name('logout');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-use App\Http\Controllers\PostController;
-
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-Route::get('/posts/{id}', [PostController::class, 'show'])->name('posts.show');
-
-use App\Http\Controllers\AccountController;
-Route::get('/account', [AccountController::class, 'edit'])->middleware('auth');
-Route::post('/account', [AccountController::class, 'update'])->name('account.update')->middleware('auth');
-
-Route::get('/about', function () {
-    return view('about');
-});
-
+// Tệp xác thực
 require __DIR__.'/auth.php';

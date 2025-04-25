@@ -10,5 +10,6 @@ class MoHinh extends Model
     protected $table = 'mo_hinhs';
 
     // Khai báo các field được phép gán
-    protected $fillable = ['tenMoHinh', 'path', 'is_active'];
+   protected $fillable = ['tenMoHinh', 'path', 'yolo_model_path', 'openai_api_key', 'is_active'];
+
 }

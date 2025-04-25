@@ -13,20 +13,23 @@
     Trình duyệt không hỗ trợ video.
   </video>
 
+  <!-- Âm thanh khi hover logo -->
+  <audio id="logo-sound" src="{{ asset('storage/1.mp3') }}"></audio>
+
   <!-- Toàn bộ layout trong main -->
   <main style="position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 100vh;">
 
     <!-- Header -->
     <header class="header">
-      <div class="logo">
-        <img src="{{ asset('storage/logo.jpg') }}" alt="Logo" class="logo-img">
-        <span class="app-name">Coins Master</span>
-      </div>
+       <div class="logo" onmouseenter="playLogoSound()" onmouseleave="stopLogoSound()">
+            <img src="{{ asset('storage/' . $pageConfig->logo_path) }}" alt="Logo" class="logo-img">
+            <span class="app-name">{{ $pageConfig->site_name ?? 'Coin Master' }}</span> <!-- Hiển thị tên trang web -->
+        </div>
       <nav class="nav">
-        <a href="http://192.168.1.100:8000/dashboard">🏠 Trang chủ</a>
-        <a href="http://192.168.1.100:8000/posts">📜 Bài viết</a>
-        <a href="http://192.168.1.100:8000/about" class="font-bold text-purple-700">📖 Giới thiệu</a>
-        <a href="http://192.168.1.100:8000/account">👤 Tài khoản</a>
+          <a href="http://127.0.0.1:8000/dashboard">🏠 Trang chủ</a>
+          <a href="http://127.0.0.1:8000/posts">📜 Bài viết</a>
+          <a href="http://127.0.0.1:8000/about" class="font-bold text-purple-700">📖 Giới thiệu</a>
+          <a href="http://127.0.0.1:8000/account">👤 Tài khoản</a>
       </nav>
       <div class="user-options">
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -70,5 +73,24 @@
 
   <!-- JavaScript -->
   <script src="{{ asset('js/script.js') }}"></script>
+
+  <!-- Phát và dừng âm thanh khi hover logo -->
+  <script>
+    function playLogoSound() {
+      const sound = document.getElementById('logo-sound');
+      if (sound) {
+        sound.currentTime = 0;
+        sound.play();
+      }
+    }
+
+    function stopLogoSound() {
+      const sound = document.getElementById('logo-sound');
+      if (sound) {
+        sound.pause();
+        sound.currentTime = 0;
+      }
+    }
+  </script>
 </body>
 </html>

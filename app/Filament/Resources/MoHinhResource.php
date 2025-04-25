@@ -15,7 +15,7 @@ use Exception;
 class MoHinhResource extends Resource
 {
     protected static ?string $model = MoHinh::class;
-    protected static ?string $navigationGroup ='Cấu hình';
+    protected static ?string $navigationGroup = 'Cấu hình';
     protected static ?string $navigationIcon = 'heroicon-o-cube'; // icon mô hình
     protected static ?string $navigationLabel = 'Mô hình';
     protected static ?string $pluralModelLabel = 'Danh sách mô hình';
@@ -29,20 +29,28 @@ class MoHinhResource extends Resource
                     ->label('Tên mô hình')
                     ->required()
                     ->maxLength(255),
+
                 Forms\Components\TextInput::make('path')
-                    ->label('Đường dẫn')
+                    ->label('Đường dẫn mô hình CNN')
                     ->required()
                     ->maxLength(255)
                     ->afterStateUpdated(function ($state) {
-                        // Kiểm tra xem đường dẫn mô hình có tồn tại không
                         if (!file_exists($state)) {
-                            // Hiển thị thông báo lỗi nếu đường dẫn không hợp lệ
-                            throw new Exception("Đường dẫn mô hình không hợp lệ.");
+                            throw new Exception("Đường dẫn mô hình CNN không hợp lệ.");
                         }
                     }),
-                Forms\Components\Checkbox::make('is_active') // Checkbox kích hoạt mô hình
+
+                Forms\Components\TextInput::make('yolo_model_path')
+                    ->label('Đường dẫn mô hình YOLO')
+                    ->maxLength(255),
+
+                Forms\Components\Textarea::make('openai_api_key')
+                    ->label('OpenAI API Key')
+                    ->rows(3),
+
+                Forms\Components\Checkbox::make('is_active')
                     ->label('Kích hoạt mô hình')
-                    ->default(false), // Mặc định không kích hoạt
+                    ->default(false),
             ]);
     }
 
@@ -54,18 +62,31 @@ class MoHinhResource extends Resource
                     ->label('Tên mô hình')
                     ->searchable()
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('path')
-                    ->label('Đường dẫn')
+                    ->label('CNN Model')
                     ->wrap()
                     ->searchable(),
-                Tables\Columns\BooleanColumn::make('is_active') // Cột trạng thái 'Kích hoạt'
+
+                Tables\Columns\TextColumn::make('yolo_model_path')
+                    ->label('YOLO Model')
+                    ->wrap()
+                    ->toggleable(),
+
+                Tables\Columns\TextColumn::make('openai_api_key')
+                    ->label('API Key')
+                    ->limit(15)
+                    ->toggleable(),
+
+                Tables\Columns\BooleanColumn::make('is_active')
                     ->label('Đang kích hoạt')
                     ->sortable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Ngày tạo')
                     ->dateTime('d/m/Y H:i'),
             ])
-            ->filters([ /* Các bộ lọc nếu cần */ ])
+            ->filters([])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
