@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,9 +13,14 @@ class Page extends Model
 
     // Các thuộc tính có thể gán giá trị
     protected $fillable = [
-        'site_name',      // Tên trang web
-        'logo_path',      // Đường dẫn logo trang web
-        'is_active',      // Trạng thái kích hoạt
+        'site_name',        // Tên trang web
+        'logo_path',        // Đường dẫn logo trang web
+        'is_active',        // Trạng thái kích hoạt
+        'site_description', // Mô tả trang web cho SEO
+        'favicon',          // Đường dẫn favicon
+        'og_title',         // Tiêu đề Open Graph
+        'og_description',   // Mô tả Open Graph
+        'og_image',         // Hình ảnh Open Graph
     ];
 
     // Lọc trạng thái kích hoạt

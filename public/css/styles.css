@@ -1,4 +1,4 @@
-/* Reset & font */
+/* ==== RESET & GLOBAL ==== */
 html, body {
   height: 100%;
   margin: 0;
@@ -9,8 +9,11 @@ html, body {
   display: flex;
   flex-direction: column;
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
+/* ==== HEADER ==== */
 .header {
   background: #ffffff;
   width: 100%;
@@ -21,10 +24,9 @@ html, body {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   min-height: 60px;
-  z-index: 1000;
+  z-index: 1;
 }
 
 .logo {
@@ -81,30 +83,36 @@ html, body {
   justify-content: flex-end;
 }
 
+/* ==== LOGOUT BUTTON ==== */
 .btn-logout {
-  background: #fe030f;
-  color: white;
-  padding: 8px 14px;
+  text-decoration: none;
+  color: #333;
+  margin-right: 5%;
+  font-weight: bold;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.3s;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transition: background 0.3s, transform 0.2s;
+  font-size: 16px;
+  background-color: white;
 }
 
 .btn-logout:hover {
-  background: #c6000b;
-  transform: translateY(-2px);
+  background: #f0f0f0;
+  color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.3);
 }
 
-/* Khoảng cách giữa header và container */
+/* ==== MAIN ==== */
 main {
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  height: auto;
+  min-height: 700px;
 }
 
+/* ==== CONTAINER ==== */
 .container {
   flex: 1;
   background: #ffffff;
@@ -113,22 +121,26 @@ main {
   text-align: center;
   width: 90%;
   max-width: 950px;
-  margin: 100px auto 40px; /* Khoảng cách giữa header và container */
+  margin: 100px auto 40px;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.5s ease-in-out;
+  box-sizing: border-box;
 }
 
+/* ==== ANIMATIONS ==== */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ==== TITLES ==== */
 h1 {
   font-size: 28px;
   margin-bottom: 20px;
   color: #333;
 }
 
+/* ==== BUTTONS ==== */
 .button-group {
   display: flex;
   justify-content: center;
@@ -138,7 +150,7 @@ h1 {
 }
 
 .button {
-  width: 140px;
+  width: 160px;
   padding: 12px 16px;
   border-radius: 8px;
   font-weight: bold;
@@ -153,111 +165,12 @@ h1 {
   transform: translateY(-2px) scale(1.02);
 }
 
-.purple {
-  background: #805ad5;
-}
-.purple:hover {
-  background: #6b46c1;
-}
+.purple { background: #805ad5; }
+.purple:hover { background: #6b46c1; }
 
-.red {
-  background: #e53e3e;
-}
-.red:hover {
-  background: #c53030;
-}
+.red { background: #e53e3e; }
+.red:hover { background: #c53030; }
 
-.result-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.image-preview {
-  width: 100%;
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 2px dashed #ccc;
-  padding: 10px;
-  border-radius: 8px;
-  background: #f9f9f9;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
-  transition: border 0.3s ease;
-}
-
-.image-preview:hover {
-  border-color: black;
-}
-
-.image-preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  border-radius: 8px;
-}
-
-img.hidden {
-  display: none;
-}
-
-.chat-answer-box {
-  padding: 15px;
-  background: #f7f7f7;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  animation: fadeIn 0.5s;
-}
-
-.footer {
-  background-color: #f1f1f1;
-  color: #444;
-  text-align: center;
-  padding: 20px 0;
-  border-top: 1px solid #ccc;
-  font-size: 14px;
-  flex-shrink: 0; /* Chắc chắn footer không bị co lại */
-  width: 100%;
-}
-
-/* 👇 Responsive cho mobile */
-@media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 10px;
-  }
-
-  /* Ẩn 'Bài viết' và 'Giới thiệu' */
-  .nav a:nth-child(2), /* 'Bài viết' */
-  .nav a:nth-child(3) { /* 'Giới thiệu' */
-    display: none;
-  }
-
-  .logo, .nav, .user-options {
-    width: 100%;
-    justify-content: center;
-    margin: 5px 0;
-  }
-
-  .container {
-    margin-top: 100px; /* Tăng khoảng cách với header khi lên mobile */
-  }
-
-  .image-preview {
-    height: 220px;
-  }
-
-  /* Sắp xếp lại nút logout và logo */
-  .user-options {
-    justify-content: center;
-    margin-top: 10px;
-  }
-}
-
-/* Nút đăng nhập và đăng ký (áp dụng cùng style nút chính) */
 .button.blue {
   background: #3182ce;
   text-decoration: none;
@@ -274,15 +187,288 @@ img.hidden {
   background: #2f855a;
 }
 
-input.hidden {
-  display: none !important;
+/* ==== IMAGE PREVIEW ==== */
+.result-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
 }
 
+.image-preview {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #ccc;
+  padding: 10px;
+  border-radius: 8px;
+  background: #f9f9f9;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
+  transition: border 0.3s ease;
+  overflow: hidden;
+}
+
+.image-preview:hover {
+  border-color: black;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+img.hidden {
+  display: none;
+}
+
+/* ==== CHAT BOX ==== */
+.chat-answer-box {
+  padding: 15px;
+  background: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  animation: fadeIn 0.5s;
+}
+
+/* ==== FOOTER ==== */
+.footer {
+  background-color: gray;
+  color: white;
+  text-align: center;
+  padding: 20px 0;
+  border-top: 1px solid #ccc;
+  font-size: 14px;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+/* ==== VIDEO BACKGROUND ==== */
 #myVideo {
   position: relative;
   top: 0;
   left: 0;
-  min-width: 100%;
-  min-height: 100%;
-  object-fit: cover; /* Giữ tỷ lệ đúng của video */
+  min-width: 100vw;
+  min-height: 100vh;
+  object-fit: cover;
+  z-index: 1;
+}
+
+/* ==== HIDDEN INPUT ==== */
+input.hidden {
+  display: none !important;
+}
+
+/* ==== HAMBURGER MENU ==== */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 30px;
+  color: black;
+  cursor: pointer;
+  z-index: 100; /* Đảm bảo nút hamburger không bị che khuất */
+  margin-top: auto;
+  margin-bottom: auto;
+}
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 768px) {
+  main {
+    min-height: auto;
+    height: auto;
+  }
+
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 3;
+  }
+
+  .nav {
+    display: none;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.85);
+    padding: 10px;
+    border-radius: 10px;
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    width: 200px;
+    z-index: 4;
+  }
+
+  .nav.show,
+  .user-options.show {
+    display: flex;
+  }
+
+  .nav a,
+  .btn-logout {
+    color: white;
+    padding: 10px;
+    text-decoration: none;
+    border-bottom: 1px solid #444;
+    align-items: center;
+    float: right;
+  }
+
+  .user-options {
+    width: 50px;
+    font-size: 12px;
+    padding: 10px;
+    border-radius: 10px;
+    position: absolute;
+    top: 60px;
+    right: 15%;
+    z-index: 3;
+    color: black;
+  }
+
+  /* Đặt nút Đăng Xuất sát bên trái */
+  .btn-logout {
+    width: 100px;
+    font-size: 12px;
+    padding: 10px;
+    border-radius: 10px;
+    position: absolute;
+    top: 20px;
+    left: 10px; /* Đưa nút sang bên trái */
+    z-index: 3;
+    color: black;
+  }
+
+  .header {
+    position: relative;
+  }
+
+  /* ===== Xử lý tràn bảng ===== */
+  .mobile-scroll-wrapper {
+    overflow-x: auto;
+    width: 100%;
+  }
+
+  table {
+    width: 100%; /* Giảm bớt chiều rộng */
+  }
+
+  th, td {
+    padding: 8px; /* Giảm padding để bảng dễ nhìn hơn */
+  }
+  .button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.button-group .button {
+  width: 100%;
+  font-size: 16px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+}
+
+
+/* ==== Pagination Styles ==== */
+.pagination-wrapper {
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 10px 0;
+  text-align: center;
+  z-index: 10;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+  margin-top: 15px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.pagination-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+}
+
+.pagination li {
+  list-style: none;
+}
+
+.pagination li a,
+.pagination li span {
+  background: #f3f4f6;
+  color: #1f2937;
+  border: 1px solid #d1d5db;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+.pagination li a:hover {
+  background: #4f46e5;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.pagination li.active span {
+  background: #4338ca;
+  color: white;
+  border-color: #4338ca;
+}
+
+.pagination li.disabled span {
+  color: #9ca3af;
+  cursor: not-allowed;
+  background: #e5e7eb;
+}
+
+@media (max-width: 768px) {
+  .pagination-wrapper {
+    overflow-x: auto;
+    padding: 10px;
+    margin-top: 12px;
+  }
+
+  .pagination {
+    flex-wrap: nowrap;
+  }
+
+  .pagination li a,
+  .pagination li span {
+    padding: 6px 10px;
+    font-size: 14px;
+    min-width: 36px;
+    text-align: center;
+  }
+
+  #myVideo {
+    display: none;
+  }
 }

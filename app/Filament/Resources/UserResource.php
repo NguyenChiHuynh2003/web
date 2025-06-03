@@ -53,12 +53,7 @@ class UserResource extends Resource
                 Forms\Components\FileUpload::make('image'),
                 Forms\Components\TextInput::make('SDT')
                     ->maxLength(255)
-                    ->default(null),
-                CheckboxList::make('roles')
-                    ->relationship('roles', 'name')
-                    ->columns(2)
-                    ->helperText('Chọn 1 vai trò')
-                    ->required()
+                    ->default(null)
             ]);
     }
 
@@ -72,10 +67,8 @@ class UserResource extends Resource
                     ->sortable()
                     ->searchable(),
                 TextColumn::make('email')->searchable(),
-                TextColumn::make('roles.name')->sortable(),
-                TextColumn::make('email_verified_at')->dateTime()->sortable(),
                 TextColumn::make('created_at')->dateTime()->sortable(),
-            
+
                 TextColumn::make('SDT')->searchable(),
                 // Hiển thị cột deleted_at nếu model sử dụng SoftDeletes
                 TextColumn::make('deleted_at')

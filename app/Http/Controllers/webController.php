@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Post;
@@ -64,16 +65,21 @@ class WebController extends Controller
         return view('dashboard', compact('pageConfig'));
     }
 
-    public function account()
+    public function xu()
     {
-    // Lấy thông tin cấu hình trang web từ cơ sở dữ liệu
-        $pageConfig = Page::first();
-
-    // Lấy thông tin người dùng đã đăng nhập
-        $user = auth()->user();
-
-    // Trả về view cho trang tài khoản và truyền thông tin cấu hình vào
-        return view('account', compact('pageConfig', 'user'));
+        $pageConfig = $this->getPageConfig();
+        return view('xu', compact('pageConfig'));
     }
 
+    public function account()
+    {
+        // Lấy thông tin cấu hình trang web từ cơ sở dữ liệu
+        $pageConfig = Page::first();
+
+        // Lấy thông tin người dùng đã đăng nhập
+        $user = auth()->user();
+
+        // Trả về view cho trang tài khoản và truyền thông tin cấu hình vào
+        return view('account', compact('pageConfig', 'user'));
+    }
 }

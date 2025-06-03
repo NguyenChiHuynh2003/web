@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Nhận diện tiền xu AI</title>
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
   <style>
@@ -58,54 +58,37 @@
       border-radius: 5px;
       border: 1px solid #ddd;
     }
-
-    .btn-logout, .bg-purple-700 {
-      font-size: 1rem;
-    }
-
-    .footer {
-      margin-top: 40px;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #555;
-    }
-
-    .footer a {
-      color: inherit;
-      text-decoration: none;
-    }
-    h1{
-        display:none;
-    }
-
-    /* Thêm một chút hiệu ứng hover cho các nút */
-    .bg-purple-700:hover {
-      background-color: #5b4b8a;
-    }
-
   </style>
 </head>
 <body>
-<main>
-  <header class="header">
-         <div class="logo" onmouseenter="playLogoSound()" onmouseleave="stopLogoSound()">
+  <!-- Âm thanh khi hover logo -->
+  <audio id="logo-sound" src="{{ asset('storage/1.mp3') }}"></audio>
+
+  <!-- Toàn bộ layout trong main -->
+  <main style="position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 100vh;">
+    <!-- Header -->
+    <header class="header">
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+       <div class="logo" onmouseenter="playLogoSound()" onmouseleave="stopLogoSound()">
             <img src="{{ asset('storage/' . $pageConfig->logo_path) }}" alt="Logo" class="logo-img">
             <span class="app-name">{{ $pageConfig->site_name ?? 'Coin Master' }}</span> <!-- Hiển thị tên trang web -->
         </div>
-    <nav class="nav">
-      <a href="http://127.0.0.1:8000/dashboard">🏠 Trang chủ</a>
-      <a href="http://127.0.0.1:8000/posts">📜 Bài viết</a>
-      <a href="http://127.0.0.1.100:8000/about" class="font-bold text-purple-700">📖 Giới thiệu</a>
-      <a href="http://127.0.0.1.100:8000/account">👤 Tài khoản</a>
-    </nav>
-    <div class="user-options">
-      <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-        @csrf
-      </form>
-      <button class="btn-logout" onclick="document.getElementById('logout-form').submit();">🔑 Đăng Xuất</button>
-    </div>
-  </header>
+      <nav class="nav">
+          <a href="http://127.0.0.1:8000/dashboard">🏠 Trang chủ</a>
+          <a href="http://127.0.0.1:8000/posts">📜 Bài viết</a>
+          <a href="http://127.0.0.1:8000/about" class="font-bold text-purple-700">📖 Giới thiệu</a>
+          <a href="http://127.0.0.1:8000/account">👤 Tài khoản</a>
+          <a href="http://127.0.0.1:8000/xu">🪙 Xu cổ</a>
 
+      </nav>
+
+      <div class="user-options">
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+          @csrf
+        </form>
+        <button class="btn-logout" onclick="document.getElementById('logout-form').submit();">🔑 Đăng Xuất</button>
+      </div>
+    </header>
   <div class="container max-w-2xl mx-auto bg-white p-6 rounded shadow">
     <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">Cập nhật thông tin tài khoản</h1>
 

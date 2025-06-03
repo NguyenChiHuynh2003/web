@@ -9,14 +9,12 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Support\Facades\Storage;
-use Exception;
 
 class MoHinhResource extends Resource
 {
     protected static ?string $model = MoHinh::class;
     protected static ?string $navigationGroup = 'Cấu hình';
-    protected static ?string $navigationIcon = 'heroicon-o-cube'; // icon mô hình
+    protected static ?string $navigationIcon = 'heroicon-o-cube';
     protected static ?string $navigationLabel = 'Mô hình';
     protected static ?string $pluralModelLabel = 'Danh sách mô hình';
     protected static ?string $modelLabel = 'Mô hình';
@@ -33,14 +31,9 @@ class MoHinhResource extends Resource
                 Forms\Components\TextInput::make('path')
                     ->label('Đường dẫn mô hình CNN')
                     ->required()
-                    ->maxLength(255)
-                    ->afterStateUpdated(function ($state) {
-                        if (!file_exists($state)) {
-                            throw new Exception("Đường dẫn mô hình CNN không hợp lệ.");
-                        }
-                    }),
+                    ->maxLength(255),
 
-                Forms\Components\TextInput::make('yolo_model_path')
+                Forms\Components\TextInput::make('yolo_path')
                     ->label('Đường dẫn mô hình YOLO')
                     ->maxLength(255),
 
@@ -68,9 +61,10 @@ class MoHinhResource extends Resource
                     ->wrap()
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('yolo_model_path')
+                Tables\Columns\TextColumn::make('yolo_path')
                     ->label('YOLO Model')
                     ->wrap()
+                    ->searchable()
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('openai_api_key')

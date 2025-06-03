@@ -6,6 +6,8 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DongXuController;
+use App\Models\Setting2;
 
 // Route gốc
 Route::get('/', [WebController::class, 'index'])->name('home');
@@ -38,5 +40,21 @@ Route::post('/logout', function () {
     return redirect('/login'); // Chuyển hướng về trang đăng nhập
 })->name('logout');
 
-// Tệp xác thực
+// Route về DongXuController
+Route::get('/xu', [DongXuController::class, 'index']);
+
+// Route lấy api_url từ Setting2
+Route::get('/get-api-url', function () {
+    $setting = Setting2::where('is_active', true)->first();
+
+    // Nếu không tìm thấy setting active
+    if (!$setting) {
+        return response()->json(['error' => 'No active setting found'], 404);
+    }
+
+    // Trả về api_url
+    return response()->json(['api_url' => $setting->api_url]);
+});
+Route::get('/xu/{id}', [DongXuController::class, 'show'])->name('xu.show');
+
 require __DIR__.'/auth.php';

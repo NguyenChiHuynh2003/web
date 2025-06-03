@@ -13,14 +13,12 @@
     Trình duyệt không hỗ trợ video.
   </video>
 
-  <!-- Âm thanh khi hover logo -->
-  <audio id="logo-sound" src="{{ asset('storage/1.mp3') }}"></audio>
-
-  <!-- Toàn bộ layout trong main -->
   <main style="position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 100vh;">
-
     <!-- Header -->
     <header class="header">
+        <!-- Nút menu 3 gạch chỉ hiện trên mobile -->
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
        <div class="logo" onmouseenter="playLogoSound()" onmouseleave="stopLogoSound()">
             <img src="{{ asset('storage/' . $pageConfig->logo_path) }}" alt="Logo" class="logo-img">
             <span class="app-name">{{ $pageConfig->site_name ?? 'Coin Master' }}</span> <!-- Hiển thị tên trang web -->
@@ -30,6 +28,8 @@
           <a href="http://127.0.0.1:8000/posts">📜 Bài viết</a>
           <a href="http://127.0.0.1:8000/about" class="font-bold text-purple-700">📖 Giới thiệu</a>
           <a href="http://127.0.0.1:8000/account">👤 Tài khoản</a>
+          <a href="http://127.0.0.1:8000/xu">🪙 Xu cổ</a>
+
       </nav>
       <div class="user-options">
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
@@ -42,12 +42,11 @@
     <!-- Container -->
     <div class="container">
       <h1 class="text-2xl font-bold mb-6 text-white">Nhận diện tiền xu</h1>
-
-      <div class="button-group">
-        <label for="upload" class="button purple cursor-pointer">📷Chọn ảnh</label>
-        <input type="file" id="upload" accept="image/*" capture="environment" class="hidden" onchange="uploadImageBoth()">
-        <button class="button red" onclick="clearResults()">🗑️ Xóa kết quả</button>
-      </div>
+       <div class="button-group">
+            <input type="file" id="upload" accept="image/*" multiple hidden onchange="uploadImageBoth()" />
+            <button class="button purple" onclick="document.getElementById('upload').click()">Chọn ảnh</button>
+            <button class="button red" onclick="clearResults()">Xóa kết quả</button>
+        </div>
 
       <div class="result-container">
         <div class="image-preview">
@@ -65,7 +64,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-      <p>© 2025 Coins Master. Hệ thống nhận diện tiền xu bằng AI.</p>
+      <p>© 2025 Coins Identifier. Hệ thống nhận diện tiền xu bằng AI.</p>
       <p>Trường Đại học Nam Cần Thơ</p>
     </footer>
 
@@ -73,24 +72,5 @@
 
   <!-- JavaScript -->
   <script src="{{ asset('js/script.js') }}"></script>
-
-  <!-- Phát và dừng âm thanh khi hover logo -->
-  <script>
-    function playLogoSound() {
-      const sound = document.getElementById('logo-sound');
-      if (sound) {
-        sound.currentTime = 0;
-        sound.play();
-      }
-    }
-
-    function stopLogoSound() {
-      const sound = document.getElementById('logo-sound');
-      if (sound) {
-        sound.pause();
-        sound.currentTime = 0;
-      }
-    }
-  </script>
 </body>
 </html>

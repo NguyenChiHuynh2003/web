@@ -3,8 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ $pageConfig->site_name ?? 'Coin Master' }}</title> <!-- Hiển thị tên trang web từ database -->
+
+  {{-- SEO Meta Tags --}}
+  @include('partials.seo', ['pageConfig' => $pageConfig])
+
+  {{-- Tên trang web fallback nếu không có trong seo --}}
+  <title>@yield('title', $pageConfig->site_name ?? 'Coin Master')</title>
+
   <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+
+  {{-- SweetAlert2 --}}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <main>
@@ -12,31 +21,31 @@
     <source src="{{ asset('vid1.mp4') }}" type="video/mp4">
   </video>
 
-  <!-- Âm thanh khi hover logo -->
-  <audio id="logo-sound" src="{{ asset('storage/1.mp3') }}"></audio>
-
   <header class="header">
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
     <div class="logo" onmouseenter="playLogoSound()" onmouseleave="stopLogoSound()">
-      <!-- Hiển thị logo từ database -->
+      {{-- Hiển thị logo từ database --}}
       <img src="{{ asset('storage/' . $pageConfig->logo_path) }}" alt="Logo" class="logo-img">
-      <span class="app-name">{{ $pageConfig->site_name ?? 'Coin Master' }}</span> <!-- Hiển thị tên trang web -->
+      <span class="app-name">{{ $pageConfig->site_name ?? 'Coin Master' }}</span>
     </div>
     <nav class="nav">
-        <a href="http://127.0.0.1:8000/dashboard">🏠 Trang chủ</a>
-        <a href="http://127.0.0.1:8000/posts">📜 Bài viết</a>
-        <a href="http://127.0.0.1:8000/about" class="font-bold text-purple-700">📖 Giới thiệu</a>
+      <a href="{{ url('/dashboard') }}">🏠 Trang chủ</a>
+      <a href="{{ url('/posts') }}">📜 Bài viết</a>
+      <a href="{{ url('/about') }}" class="font-bold text-purple-700">📖 Giới thiệu</a>
+      <a href="{{ url('/account') }}">👤 Tài khoản</a>
+      <a href="{{ url('/xu') }}">🪙 Xu cổ</a>
     </nav>
     <div style="margin-right: 5%" class="user-options">
-        <a style="text-align: center;" href="http://127.0.0.1:8000/login" class="button blue">Đăng nhập</a>
-        <a style="text-align: center;" href="http://127.0.0.1:8000/register" class="button green">Đăng ký</a>
+      <a href="{{ url('/login') }}" class="button blue">Đăng nhập</a>
+      <a href="{{ url('/register') }}" class="button green">Đăng ký</a>
     </div>
   </header>
 
   <div class="container">
     <h1>Nhận diện tiền xu</h1>
     <div class="button-group">
-      <input type="file" id="upload" accept="image/*" hidden onchange="uploadImageBoth()" />
-      <button class="button purple" onclick="document.getElementById('upload').click()">Chọn ảnh</button>
+      <input type="file" id="upload" accept="image/*" multiple hidden onchange="uploadImageBoth()" />
+      <button class="button purple" onclick="handleUploadClick()">Chọn ảnh</button>
       <button class="button red" onclick="clearResults()">Xóa kết quả</button>
     </div>
 
@@ -63,24 +72,33 @@
 </main>
 
 <script src="{{ asset('js/script.js') }}"></script>
-<script>
-  function playLogoSound() {
-    const sound = document.getElementById('logo-sound');
-    if (sound) {
-      sound.currentTime = 0;
-      sound.play().catch((e) => {
-        console.log("Autoplay blocked:", e);
-      });
-    }
-  }
 
-  function stopLogoSound() {
-    const sound = document.getElementById('logo-sound');
-    if (sound) {
-      sound.pause();
-      sound.currentTime = 0;
+<script>
+  let uploadClickCount = 0;
+  const MAX_UPLOAD_CLICKS = 1;
+
+  function handleUploadClick() {
+    if (uploadClickCount >= MAX_UPLOAD_CLICKS) {
+      Swal.fire({
+        title: 'Bạn đã hết lượt chọn ảnh!',
+        text: 'Đăng nhập để có trải nghiệm đầy đủ nhất.',
+        icon: 'info',
+        confirmButtonText: 'Đăng nhập ngay',
+        confirmButtonColor: '#4CAF50',
+        showCancelButton: true,
+        cancelButtonText: 'Để sau',
+        cancelButtonColor: '#999'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = "{{ url('/login') }}";
+        }
+      });
+      return;
     }
+    uploadClickCount++;
+    document.getElementById('upload').click();
   }
 </script>
+
 </body>
 </html>

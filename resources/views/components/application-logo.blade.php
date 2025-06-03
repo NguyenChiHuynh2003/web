@@ -12,6 +12,6 @@
 </style>
 </head>
 <body>
-<img src="{{ asset('storage/logo.jpg') }}" alt="Logo" class="logo-img">
+<p style="font-size: 20px;" >Đăng nhập</p>
 </body>
 </html>
